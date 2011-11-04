@@ -1,4 +1,4 @@
-require 'helper'
+require 'test_helper'
 
 class HandTest < Test::Unit::TestCase  
   include HandTestHelper

@@ -1,4 +1,4 @@
-require 'helper'
+require 'test_helper'
 
 class HandTest < Test::Unit::TestCase
   test "should always have cards sorted in ascending order by face value" do

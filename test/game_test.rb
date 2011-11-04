@@ -1,4 +1,4 @@
-require 'helper'
+require 'test_helper'
 
 class GameTest < Test::Unit::TestCase
   def setup
