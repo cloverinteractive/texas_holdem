@@ -1,7 +1,5 @@
 source 'http://rubygems.org'
-
-gem 'rake'
-gem 'rdoc'
+gem 'rails'
 gem 'sqlite3'
 
 group :test  do
