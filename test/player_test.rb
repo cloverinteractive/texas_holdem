@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PlayerTest < Test::Unit::TestCase
+class PlayerTest < ActiveSupport::TestCase
   def setup
     @entrance_fee = 100
     @player = TexasHoldem::Player.new 'Carl', @entrance_fee

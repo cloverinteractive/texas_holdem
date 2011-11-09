@@ -1,13 +1,13 @@
 require 'test_helper'
 
-class HandTest < Test::Unit::TestCase
+class HandTest < ActiveSupport::TestCase
   test "should always have cards sorted in ascending order by face value" do
     hand = TexasHoldem::PlayerHand.new('Ad As 5c 6c Jd')
     assert_equal  "5c 6c 11d 14s 14d", hand.cards
   end
 end
 
-class HandIdentificationTest < Test::Unit::TestCase
+class HandIdentificationTest < ActiveSupport::TestCase
   test "should recognise a high card" do
     '2d 3s 5c 6c Ad'.hand_name 'high card'
   end
@@ -44,7 +44,7 @@ class HandIdentificationTest < Test::Unit::TestCase
   end
 end
 
-class WinningHandsTest < Test::Unit::TestCase
+class WinningHandsTest < ActiveSupport::TestCase
   test "highest card should win if no scoring poker hands" do
     '2d 3s 5c 6c Ad'.beats '2c 3d 5s 6h Kd'
   end

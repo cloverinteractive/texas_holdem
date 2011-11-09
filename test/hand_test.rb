@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class HandTest < Test::Unit::TestCase  
+class HandTest < ActiveSupport::TestCase
   include HandTestHelper
   
   test "should not have a winner initially" do
@@ -48,7 +48,7 @@ class HandTest < Test::Unit::TestCase
   end
 end
 
-class PocketHandTest < Test::Unit::TestCase  
+class PocketHandTest < ActiveSupport::TestCase
   include HandTestHelper
   
   test "first round should be pocket/hole cards" do
@@ -73,7 +73,7 @@ class PocketHandTest < Test::Unit::TestCase
   end
 end     
 
-class FlopTest < Test::Unit::TestCase 
+class FlopTest < ActiveSupport::TestCase
   include HandTestHelper
   
   def setup
@@ -95,7 +95,7 @@ class FlopTest < Test::Unit::TestCase
   end
 end
 
-class TurnTest < Test::Unit::TestCase 
+class TurnTest < ActiveSupport::TestCase
   include HandTestHelper
   
   def setup
@@ -117,7 +117,7 @@ class TurnTest < Test::Unit::TestCase
   end
 end
                          
-class RiverTest < Test::Unit::TestCase 
+class RiverTest < ActiveSupport::TestCase
   include HandTestHelper
   
   def setup
@@ -139,7 +139,7 @@ class RiverTest < Test::Unit::TestCase
   end
 end
 
-class TwoPlayerHandTest < Test::Unit::TestCase
+class TwoPlayerHandTest < ActiveSupport::TestCase
   include HandTestHelper
   
   def setup

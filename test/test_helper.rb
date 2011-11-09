@@ -1,16 +1,19 @@
-
 # TODO: create a rake task to load irb environment
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'texas_holdem'
+require 'betting_round'
+require 'texas_holdem/player_hand'
+require 'texas_holdem/player'
+require 'texas_holdem/game'
+require 'texas_holdem/deck'
+require 'texas_holdem/hand'
 require 'mocha'
 require 'turn'
-require 'rails/test_help'
+require 'active_support'
 
-class Test::Unit::TestCase
-  extend ActiveSupport::Testing::Declarative
-  
+class ActiveSupport::TestCase
   def assert_cards(number,players)
     assert players.all? {|player| player.cards.size == number }
   end

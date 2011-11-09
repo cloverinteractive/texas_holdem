@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class GameTest < Test::Unit::TestCase
+class GameTest < ActiveSupport::TestCase
   def setup
     @game = TexasHoldem::Game.new [], 100
   end
