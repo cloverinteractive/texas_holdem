@@ -1,6 +1,6 @@
-require 'helper'
+require 'test_helper'
 
-class BettingRoundTest < Test::Unit::TestCase
+class BettingRoundTest < ActiveSupport::TestCase
   include HandTestHelper
   
   def setup

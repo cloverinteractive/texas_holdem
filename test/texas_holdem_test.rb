@@ -1,6 +1,6 @@
-require 'helper'
+require 'test_helper'
 
-class TexasHoldemTest < Test::Unit::TestCase
+class TexasHoldemTest < ActiveSupport::TestCase
   def setup
   end
   
