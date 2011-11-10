@@ -1,14 +1,5 @@
-# TODO: create a rake task to load irb environment
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+Dir[ "{lib}/*.rb", "{lib}/**/*.rb"  ].each { |file| require file } # require our lib files
 
-require 'texas_holdem'
-require 'betting_round'
-require 'texas_holdem/player_hand'
-require 'texas_holdem/player'
-require 'texas_holdem/game'
-require 'texas_holdem/deck'
-require 'texas_holdem/hand'
 require 'mocha'
 require 'turn'
 require 'active_support'
