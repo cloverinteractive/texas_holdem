@@ -1,16 +1,10 @@
-require 'rubygems'
-require 'test/unit'
-require 'active_support/testing/declarative'
+Dir[ "{lib}/*.rb", "{lib}/**/*.rb"  ].each { |file| require file } # require our lib files
+
 require 'mocha'
+require 'turn'
+require 'active_support'
 
-# TODO: create a rake task to load irb environment
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-require 'texas_holdem'
-
-class Test::Unit::TestCase
-  extend ActiveSupport::Testing::Declarative
-  
+class ActiveSupport::TestCase
   def assert_cards(number,players)
     assert players.all? {|player| player.cards.size == number }
   end
