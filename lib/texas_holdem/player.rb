@@ -1,11 +1,12 @@
 module TexasHoldem
   module Player
-    def is_holdem_player options={}
+    def acts_as_holdem_player options={}
       return if included_modules.include? IntanceMethods
 
-      cattr_accessor :initial_credit
+      cattr_accessor :initial_credit, :game_class
 
       self.initial_credit = options[:initial_credit] || 100
+      self.game_class     = options[:game_class]
 
       include InstanceMethods
       extend ClassMethods
@@ -39,6 +40,9 @@ module TexasHoldem
       included do
         validates     :credit, :presence => true, :numericality => { :greater_than_or_equal_to => 0 }
         after_create  :add_initial_credit
+
+        has_many :poker_hands # must define this model within gem
+        has_many :games, :source =>  self.game_class, :foreign_key => :winner_id
 
         attr_protected :credit
         scope :lesser_credit, order( 'credit' )
