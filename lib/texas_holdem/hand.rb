@@ -1,78 +1,44 @@
-require 'enumerated_attribute'
+module TexasHoldem
+  module Hand
+    def acts_as_holdem_hand options
+      return if included_modules.include? InstanceMethods
 
-class TexasHoldem::Hand
-  enum_attr :round, %w( ^pocket flop turn river showdown )
-  attr_reader :players, :community_cards
-  attr_accessor :pot
-  
-  def initialize(players, small_blind_amount=1)
-    @players = players
-    @deck = TexasHoldem::Deck.new
-    @community_cards = []
-    @small_blind_amount = small_blind_amount
-    @pot = 0 # Should this be an Observer?
-  end
-  
-  def dealer
-    @players.first
-  end
-  
-  def minimum_bet
-    @small_blind_amount * 2
-  end
-  
-  def small_blind
-    return dealer if players_remaining? 2
-    @players[2]
-  end
-  
-  def big_blind
-    return @players.last if players_remaining? 2
-    @players[1]
-  end
-  
-  def winner
-    return unless finished?
-    winning_player = @players.first
-    winning_player.take_winnings @pot
-    winning_player
-  end
-  
-  def finished?
-    players_remaining? 1
-  end
-  
-  def fold(player)
-    @players.delete player
-  end
-  
-  def deal
-    case round
-      when :pocket : deal_pocket_cards && deduct_blinds
-      when :flop   : deal_community_cards 3
-      when :turn   : deal_community_cards 1
-      when :river  : deal_community_cards 1
+      cattr_accessor :small_blind_percentage, :player_class, :game_class
+
+      self.small_blind_percentage = options[:small_blind_percentage] || 0.0125
+      self.player_class           = options[:player_class]
+      self.game_class             = options[:game_class]
+
+      include InstanceMethods
+      extend ClassMethods
     end
-  end
-  
-  private
-  
-  def players_remaining?(number)
-    @players.size == number
-  end
-  
-  def deal_pocket_cards
-    @players.each do |player| 
-      2.times { player.cards << @deck.next_card }
+
+    module InstanceMethods
+      def small_blind
+        small_blind_percentage * entrance_fee
+      end
+
+      def minimum_bet
+        small_blind * 2
+      end
     end
-  end
-  
-  def deal_community_cards(number)
-    number.times { @community_cards << @deck.next_card }
-  end
-  
-  def deduct_blinds
-    @pot += small_blind.bet(@small_blind_amount)
-    @pot += big_blind.bet(@small_blind_amount * 2)
+
+    module ClassMethods
+      extend ActiveSupport::Concern
+
+      included do
+        belongs_to  :game,    :source => self.game_class
+        belongs_to  :dealer,  :source => self.player_class, :foreign_key => :dealer_id
+
+        has_one     :poker_hand # must define this model within gem
+        has_many    :players, :through => :poker_hand
+
+        symbolize :round, :in => [ :pocket, :flop, :turn, :river, :showdown ], :methods => true, :scopes => true
+
+        validates :entrance_fee, :presence => true, :numericality => { :greater_than => 0 }
+      end
+    end
   end
 end
+
+ActiveRecord::Base.send :extend, TexasHoldem::Hand
